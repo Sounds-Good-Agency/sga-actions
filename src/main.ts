@@ -52,8 +52,8 @@ export async function run(): Promise<void> {
     const githubToken = core.getInput("github-token", { required: true });
     const octokit = github.getOctokit(githubToken);
 
-    let parsedData = await getPaginatedData(staticURL, octokit);
-    core.debug(`parsedData: ${parsedData}`);
+    // let parsedData = await getPaginatedData(staticURL, octokit);
+    // core.debug(`parsedData: ${parsedData}`);
 
     // build this url from the github context
     // let API_PR_URL = `https://api.github.com/repos/Sounds-Good-Agency/expedo-store/pulls/46/files?per_page=${PER_PAGE}`
