@@ -28976,8 +28976,8 @@ async function run() {
         core.debug(`insideData: ${pr_array}`);
         // let parsedData = await getPaginatedData(staticURL, octokit);
         // core.debug(`parsedData: ${parsedData}`);
-        const response = await octokit.request(url);
-        core.debug(`response: ${response.data}`);
+        // const response = await octokit.request(url);
+        // core.debug(`response: ${response.data}`);
         // Log the current timestamp, wait, then log the new timestamp
         // core.debug(new Date().toTimeString());
         // await wait(parseInt(ms, 10));
