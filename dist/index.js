@@ -28939,35 +28939,7 @@ exports.run = void 0;
 //@ts-nocheck
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
-let staticURL = "https://api.github.com/repos/Sounds-Good-Agency/expedo-store/pulls/46/files?per_page=100";
-let arrayOfFilename = (/* unused pure expression or super */ null && ([]));
-async function getPaginatedData(url, octokit) {
-    const nextPattern = /(?<=<)([\S]*)(?=>; rel="Next")/i;
-    let pagesRemaining = true;
-    let data = [];
-    while (pagesRemaining) {
-        const response = await octokit.request(`GET ${url}`, {
-            per_page: 100,
-            headers: {
-                "X-GitHub-Api-Version": "2022-11-28",
-            },
-        });
-        const parsedData = parseData(response.data);
-        data = [...data, ...parsedData];
-        const linkHeader = response.headers.link;
-        let pagesRemaining = linkHeader && linkHeader.includes(`rel=\"next\"`);
-        if (pagesRemaining) {
-            url = linkHeader.match(nextPattern)[0];
-        }
-    }
-    return data;
-}
-function parseData(data) {
-    for (let i = 0; i < data.length; i++) {
-        arrayOfFilename.push(data[i].filename);
-    }
-    return arrayOfFilename;
-}
+// import { wait } from "./wait";
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
@@ -28977,12 +28949,14 @@ async function run() {
         const ms = core.getInput("milliseconds");
         const githubToken = core.getInput("github-token", { required: true });
         const octokit = github.getOctokit(githubToken);
-        // let parsedData = await getPaginatedData(staticURL, octokit);
-        // core.debug(`parsedData: ${parsedData}`);
         // build this url from the github context
         // let API_PR_URL = `https://api.github.com/repos/Sounds-Good-Agency/expedo-store/pulls/46/files?per_page=${PER_PAGE}`
         let url = `https://api.github.com/repos/${github.context.repo.owner}/${github.context.repo.repo}/pulls/${github.context.payload.pull_request?.number}/files?per_page=100`;
         core.debug(`url: ${url}`);
+        // let parsedData = await getPaginatedData(staticURL, octokit);
+        // core.debug(`parsedData: ${parsedData}`);
+        const response = await octokit.request(url);
+        core.debug(`response: ${response.data}`);
         // Log the current timestamp, wait, then log the new timestamp
         // core.debug(new Date().toTimeString());
         // await wait(parseInt(ms, 10));
