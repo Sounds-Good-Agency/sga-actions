@@ -53,11 +53,12 @@ export async function run(): Promise<void> {
      * The bottom is a patch, I will fix it to pass the original array, not now though.
      * @0xlino
      */
-    let output = "";
-    for (let i = 0; i < pr_array.length; i++) {
-      output += pr_array[i] + " ";
-    }
-    core.setOutput("files", output);
+    // let output = "";
+    // for (let i = 0; i < pr_array.length; i++) {
+    //   output += pr_array[i] + " ";
+    // }
+    // core.setOutput("files", output);
+    core.setOutput("files", pr_array);
 
     // let parsedData = await getPaginatedData(staticURL, octokit);
     // core.debug(`parsedData: ${parsedData}`);
