@@ -28940,6 +28940,25 @@ exports.run = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 // import { wait } from "./wait";
+const runAsync = async () => {
+    const data = await octokit.paginate("GET /repos/Sounds-Good-Agency/expedo-store/pulls/46/files", {
+        owner: "Sounds-Good-Agency",
+        repo: "expedo-store",
+        per_page: 100,
+        headers: {
+            "X-GitHub-Api-Version": "2022-11-28",
+        },
+    });
+    return data;
+};
+const buildArray = async () => {
+    let insideData = [];
+    const paginatedData = await runAsync();
+    for (let i = 0; i < paginatedData.length; i++) {
+        insideData.push(paginatedData[i].filename);
+    }
+    return insideData;
+};
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
@@ -28953,6 +28972,8 @@ async function run() {
         // let API_PR_URL = `https://api.github.com/repos/Sounds-Good-Agency/expedo-store/pulls/46/files?per_page=${PER_PAGE}`
         let url = `https://api.github.com/repos/${github.context.repo.owner}/${github.context.repo.repo}/pulls/${github.context.payload.pull_request?.number}/files?per_page=100`;
         core.debug(`url: ${url}`);
+        insideData = await buildArray();
+        core.debug(`insideData: ${insideData}`);
         // let parsedData = await getPaginatedData(staticURL, octokit);
         // core.debug(`parsedData: ${parsedData}`);
         const response = await octokit.request(url);
