@@ -4,6 +4,7 @@ import * as github from "@actions/github";
 // import { wait } from "./wait";
 
 const runAsync = async () => {
+  const octokit = github.getOctokit(githubToken);
   const data = await octokit.paginate(
     "GET /repos/Sounds-Good-Agency/expedo-store/pulls/46/files",
     {
@@ -36,8 +37,6 @@ export async function run(): Promise<void> {
   try {
     const ms = core.getInput("milliseconds");
     const githubToken = core.getInput("github-token", { required: true });
-    const octokit = github.getOctokit(githubToken);
-
     // build this url from the github context
     // let API_PR_URL = `https://api.github.com/repos/Sounds-Good-Agency/expedo-store/pulls/46/files?per_page=${PER_PAGE}`
     let url = `https://api.github.com/repos/${github.context.repo.owner}/${github.context.repo.repo}/pulls/${github.context.payload.pull_request?.number}/files?per_page=100`;
