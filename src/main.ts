@@ -60,13 +60,13 @@ export async function run(): Promise<void> {
     let url = `https://api.github.com/repos/${github.context.repo.owner}/${github.context.repo.repo}/pulls/${github.context.payload.pull_request?.number}/files?per_page=100`;
     core.debug(`url: ${url}`);
     // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString());
-    await wait(parseInt(ms, 10));
-    core.debug(new Date().toTimeString());
+    // core.debug(new Date().toTimeString());
+    // await wait(parseInt(ms, 10));
+    // core.debug(new Date().toTimeString());
 
     // Set outputs for other workflow steps to use
     core.setOutput("time", new Date().toTimeString());
-    core.setOutput("files", parsedData);
+    // core.setOutput("files", parsedData);
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message);
