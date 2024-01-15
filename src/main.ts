@@ -4,7 +4,7 @@ import * as github from "@actions/github";
 // import { wait } from "./wait";
 
 const ms = core.getInput("milliseconds");
-const githubToken = core.getInput("github-token", { required: true })
+const githubToken = core.getInput("github-token", { required: true });
 
 const runAsync = async () => {
   const octokit = github.getOctokit(githubToken);
@@ -43,8 +43,8 @@ export async function run(): Promise<void> {
     let url = `https://api.github.com/repos/${github.context.repo.owner}/${github.context.repo.repo}/pulls/${github.context.payload.pull_request?.number}/files?per_page=100`;
     core.debug(`url: ${url}`);
 
-    insideData = await buildArray();
-    core.debug(`insideData: ${insideData}`);
+    let pr_array = await buildArray();
+    core.debug(`insideData: ${pr_array}`);
 
     // let parsedData = await getPaginatedData(staticURL, octokit);
     // core.debug(`parsedData: ${parsedData}`);
