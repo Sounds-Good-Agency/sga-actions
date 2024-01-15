@@ -28940,6 +28940,8 @@ exports.run = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 // import { wait } from "./wait";
+const ms = core.getInput("milliseconds");
+const githubToken = core.getInput("github-token", { required: true });
 const runAsync = async () => {
     const octokit = github.getOctokit(githubToken);
     const data = await octokit.paginate("GET /repos/Sounds-Good-Agency/expedo-store/pulls/46/files", {
@@ -28966,8 +28968,6 @@ const buildArray = async () => {
  */
 async function run() {
     try {
-        const ms = core.getInput("milliseconds");
-        const githubToken = core.getInput("github-token", { required: true });
         // build this url from the github context
         // let API_PR_URL = `https://api.github.com/repos/Sounds-Good-Agency/expedo-store/pulls/46/files?per_page=${PER_PAGE}`
         let url = `https://api.github.com/repos/${github.context.repo.owner}/${github.context.repo.repo}/pulls/${github.context.payload.pull_request?.number}/files?per_page=100`;
