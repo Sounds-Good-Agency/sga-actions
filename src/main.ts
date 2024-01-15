@@ -8,11 +8,14 @@ const githubToken = core.getInput("github-token", { required: true });
 
 const runAsync = async () => {
   const octokit = github.getOctokit(githubToken);
+  const owner = github.context.repo.owner;
+  const repo = github.context.repo.repo;
+  const pull_number = github.context.payload.pull_request?.number;
   const data = await octokit.paginate(
-    "GET /repos/Sounds-Good-Agency/expedo-store/pulls/46/files",
+    `GET /repos/${owner}/${repo}/pulls/${pull_number}/files`,
     {
-      owner: "Sounds-Good-Agency",
-      repo: "expedo-store",
+      owner: owner,
+      repo: repo,
       per_page: 100,
       headers: {
         "X-GitHub-Api-Version": "2022-11-28",
