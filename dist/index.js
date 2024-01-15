@@ -28982,8 +28982,8 @@ async function run() {
          * @0xlino
          */
         let output = "";
-        for (let i = 0; i < data.length; i++) {
-            output += data[i] + " ";
+        for (let i = 0; i < pr_array.length; i++) {
+            output += pr_array[i] + " ";
         }
         core.setOutput("files", output);
         // let parsedData = await getPaginatedData(staticURL, octokit);
