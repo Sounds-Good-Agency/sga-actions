@@ -48,6 +48,7 @@ export async function run(): Promise<void> {
 
     let pr_array = await buildArray();
     core.debug(`insideData: ${pr_array}`);
+    core.setOutput("files", pr_array);
 
     // let parsedData = await getPaginatedData(staticURL, octokit);
     // core.debug(`parsedData: ${parsedData}`);
