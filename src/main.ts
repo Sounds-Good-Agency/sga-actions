@@ -48,7 +48,16 @@ export async function run(): Promise<void> {
 
     let pr_array = await buildArray();
     core.debug(`insideData: ${pr_array}`);
-    core.setOutput("files", pr_array);
+
+    /**
+     * The bottom is a patch, I will fix it to pass the original array, not now though.
+     * @0xlino
+     */
+    let output = "";
+    for (let i = 0; i < data.length; i++) {
+      output += data[i] + " ";
+    }
+    core.setOutput("files", output);
 
     // let parsedData = await getPaginatedData(staticURL, octokit);
     // core.debug(`parsedData: ${parsedData}`);
