@@ -29,7 +29,19 @@ const buildArray = async () => {
     /**
      * This is to make sure stuff not caught in the .gitignore is not included
      */
-    let arrayToRemove = [".DS_Store"]; // if you want to remove more files, add them here
+
+    let arrayToRemove = [
+      ".DS_Store",
+      ".babelrc",
+      ".eslintignore",
+      ".eslintrc",
+      ".eslintrc.json",
+      ".gitignore",
+      ".mocharc.json",
+      ".shopifyignore",
+      ".stylelintignore",
+      "stylelintrc.json",
+    ]; // if you want to remove more files, add them here
     if (!arrayToRemove.includes(paginatedData[i].filename)) {
       insideData.push(paginatedData[i].filename);
     }
