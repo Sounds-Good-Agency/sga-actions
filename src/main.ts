@@ -1,4 +1,3 @@
-//@ts-nocheck
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 
@@ -25,10 +24,15 @@ const runAsync = async () => {
 
 const buildArray = async () => {
   let insideData = [];
-  const paginatedData = await runAsync();
-
+  const paginatedData: any = await runAsync();
   for (let i = 0; i < paginatedData.length; i++) {
-    insideData.push(paginatedData[i].filename);
+    /**
+     * This is to make sure stuff not caught in the .gitignore is not included
+     */
+    let arrayToRemove = [".DS_Store"]; // if you want to remove more files, add them here
+    if (!arrayToRemove.includes(paginatedData[i].filename)) {
+      insideData.push(paginatedData[i].filename);
+    }
   }
   return insideData;
 };
@@ -39,9 +43,6 @@ const buildArray = async () => {
  */
 export async function run(): Promise<void> {
   try {
-    let url = `https://api.github.com/repos/${github.context.repo.owner}/${github.context.repo.repo}/pulls/${github.context.payload.pull_request?.number}/files?per_page=100`;
-    core.debug(`url: ${url}`);
-
     let pr_array = await buildArray();
     core.debug(`insideData: ${pr_array}`);
     let output = "";

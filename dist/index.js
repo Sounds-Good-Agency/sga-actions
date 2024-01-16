@@ -28936,7 +28936,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = void 0;
-//@ts-nocheck
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const githubToken = core.getInput("github-token", { required: true });
@@ -28959,7 +28958,13 @@ const buildArray = async () => {
     let insideData = [];
     const paginatedData = await runAsync();
     for (let i = 0; i < paginatedData.length; i++) {
-        insideData.push(paginatedData[i].filename);
+        /**
+         * This is to make sure stuff not caught in the .gitignore is not included
+         */
+        let arrayToRemove = [".DS_Store"]; // if you want to remove more files, add them here
+        if (!arrayToRemove.includes(paginatedData[i].filename)) {
+            insideData.push(paginatedData[i].filename);
+        }
     }
     return insideData;
 };
@@ -28969,8 +28974,6 @@ const buildArray = async () => {
  */
 async function run() {
     try {
-        let url = `https://api.github.com/repos/${github.context.repo.owner}/${github.context.repo.repo}/pulls/${github.context.payload.pull_request?.number}/files?per_page=100`;
-        core.debug(`url: ${url}`);
         let pr_array = await buildArray();
         core.debug(`insideData: ${pr_array}`);
         let output = "";
