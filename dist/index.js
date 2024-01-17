@@ -28972,6 +28972,7 @@ const buildArray = async () => {
             ".shopifyignore",
             ".stylelintignore",
             "stylelintrc.json",
+            "settings_data.json",
         ]; // if you want to remove more files, add them here
         if (!arrayToRemove.includes(paginatedData[i].filename)) {
             insideData.push(paginatedData[i].filename);
