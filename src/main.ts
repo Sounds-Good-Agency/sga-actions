@@ -42,8 +42,10 @@ const buildArray = async () => {
       ".stylelintignore",
       "stylelintrc.json",
       "settings_data.json",
+      "settings-data.json",
       "release.yml",
       ".workflow/release.yml", // just in case but above should catch it
+      "config/settings_data.json",
     ]; // if you want to remove more files, add them here
     if (!arrayToRemove.includes(paginatedData[i].filename)) {
       insideData.push(paginatedData[i].filename);
