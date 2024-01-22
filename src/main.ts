@@ -1,7 +1,22 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
+import { execCLI2 } from "@shopify/cli-kit/node/ruby"
 
 const githubToken = core.getInput("github-token", { required: true });
+
+const downloadSettingsFromLive = async () => {
+  try {
+    const command = ['theme', 'pull', 'config/settings_data.json', '--env', 'live'];
+    const result = await execCLI2(command, {
+      store: 'my-store.myshopify.com',
+      adminToken: 'my-admin-token',
+    });
+    return result;
+  } catch (error) {
+    // Fail the workflow run if an error occurs
+    if (error instanceof Error) core.setFailed(error.message);
+  }
+}
 
 const runAsync = async () => {
   const octokit = github.getOctokit(githubToken);
